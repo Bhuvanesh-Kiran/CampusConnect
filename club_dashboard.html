@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <p class="logo">Campus <b style="color: #6a329f;">Connect</b></p>
+    </div>
+
+    <div class="dash-content">
+        <!-- Overview Section -->
+        <div class="overview">
+            <div class="title">
+                <i class="uil uil-tachometer-fast-alt"></i>
+                <span class="text">Dashboard - {{ club.club_name }}</span>
+            </div>
+
+            <div class="boxes">
+                <div class="box box1">
+                    <i class="uil uil-user"></i>
+                    <span class="text">Total Members</span>
+                    <span class="number">{{ club.total_members }}</span>
+                </div>
+                <div class="box box2">
+                    <i class="uil uil-comments"></i>
+                    <span class="text">Feedbacks</span>
+                    <span class="number">{{ club.total_feedbacks }}</span>
+                </div>
+                <div class="box box3">
+                    <i class="uil uil-calendar-alt"></i>
+                    <span class="text">Events Hosted</span>
+                    <span class="number">{{ club.events_hosted }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Section -->
+        <div class="activity">
+            <div class="title">
+                <i class="uil uil-images"></i>
+                <span class="text">Gallery</span>
+            </div>
+
+            <div class="photo-gallery">
+                {% for media in club.gallery[:2] %}
+                <img src="{{ media.photo_url }}" alt="{{ media.photo_name }}">
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

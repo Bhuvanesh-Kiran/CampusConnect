@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <p class="logo">Campus <b style="color: #6A0DAD;">Connect</b></p>
+    </div>
+    <br><br><br>
+
+    <!-- Description -->
+    <div class="description">
+        <h2>{{ club.club_name }}</h2>
+        <p id="description-text">{{ club.description }}</p>
+        {% if is_club_leader %}
+        <button id="edit-button" style="border: 1px solid #007bff; background: none; color: #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; width: 5cm;">Edit</button>
+        <button id="submit-button" style="display: none; border: 1px solid #007bff; background: none; color: #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; width: 5cm;">Submit</button>
+        {% endif %}
+    </div>
+
+    <!-- Table of Key People -->
+    <div class="key-people">
+        <h2>Key People</h2>
+        <table border="1" cellspacing="0" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Department</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ club.leader.full_name }}</td>
+                    <td>Club Leader</td>
+                    <td>{{ club.leader.department }}</td>
+                    <td>{{ club.leader.email }}</td>
+                </tr>
+                <tr>
+                    <td>{{ club.coordinator_name }}</td>
+                    <td>Coordinator</td>
+                    <td>{{ club.coordinator_contact }}</td>
+                    <td>{{ club.coordinator_contact }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<script>
+    const editButton = document.getElementById('edit-button');
+    const submitButton = document.getElementById('submit-button');
+    const descriptionText = document.getElementById('description-text');
+
+    editButton.addEventListener('click', () => {
+        const currentText = descriptionText.innerText;
+        descriptionText.innerHTML = `<textarea id="edit-area" style="width: 100%; height: 100px;">${currentText}</textarea>`;
+        editButton.style.display = 'none';
+        submitButton.style.display = 'inline-block';
+    });
+
+    submitButton.addEventListener('click', () => {
+        const editArea = document.getElementById('edit-area');
+        fetch(`/description/{{ club.club_id }}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `description=${encodeURIComponent(editArea.value)}`
+        }).then(() => window.location.reload());
+    });
+</script>
+{% endblock %}

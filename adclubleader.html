@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adashboard.css') }}">
+     
+    <!-- Iconscout CSS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Admin Dashboard Panel</title> 
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+            </div>
+            <span class="logo_name">ADMIN</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="{{ url_for('admin_home') }}"></a>
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Overview</span>
+                </a></li>
+                <li><a href="{{ url_for('adstudents') }}"></a>
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Students</span>
+                </a></li>
+                <li><a href="{{ url_for('adclubs') }}"></a>
+                    <i class="uil uil-heart"></i>
+                    <span class="link-name">Clubs</span>
+                </a></li>
+                <li><a href="#">
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Club leaders</span>
+                </a></li>
+               
+            </ul>
+            
+            <ul class="logout-mode">
+                <li><a href="logout.html">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+                <li class="mode">
+                    <a href="#">
+                        <i class="uil uil-moon"></i>
+                    <span class="link-name">Dark Mode</span>
+                    </a>
+                    <div class="mode-toggle">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <p class="logo">Campus <b style="color: #6A0DAD;">Connect</b></p>
+        </div>
+        <br><br><br>
+        <div class="Club-leader details">
+          <h2>Club Leader Details</h2>
+          <table border="1" cellspacing="0" cellpadding="10">
+              <thead>
+                  <tr>
+                      <th>Club Name</th>
+                      <th>Club Leader</th>
+                      <th>Department</th>
+                      <th>Regd Number</th>
+                      <th>Club members</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td>Arts club</td>
+                      <td>Bhuvanesh</td>
+                      <td>CSIT</td>
+                      <td>703</td>
+                      <td>30</td>
+                  </tr>
+                  <tr>
+                      <td>Sports club</td>
+                      <td>Venky</td>
+                      <td>IT</td>
+                      <td>735</td>
+                      <td>45</td>
+                  </tr>
+                  <tr>
+                    <td>Technical Club</td>
+                    <td>Rohit</td>
+                    <td>CSE</td>
+                    <td>711</td>
+                    <td>50</td>
+                </tr>
+                <tr>
+                    <td>Literary Club</td>
+                    <td>Meghana</td>
+                    <td>ECE</td>
+                    <td>725</td>
+                    <td>25</td>
+                </tr>
+                <tr>
+                    <td>Music Club</td>
+                    <td>Harsha</td>
+                    <td>EEE</td>
+                    <td>742</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>Photography Club</td>
+                    <td>Akash</td>
+                    <td>MECH</td>
+                    <td>759</td>
+                    <td>18</td>
+                </tr>
+                <tr>
+                    <td>Drama Club</td>
+                    <td>Sneha</td>
+                    <td>CSE</td>
+                    <td>780</td>
+                    <td>35</td>
+                </tr>
+                <tr>
+                    <td>Robotics Club</td>
+                    <td>Surya</td>
+                    <td>AI & ML</td>
+                    <td>799</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+              </tbody>
+          </table>
+      </div>
+
+        
+    </section>
+</body>
+</html>

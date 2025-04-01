@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adashboard.css') }}">
+
+     
+    <!-- Iconscout CSS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Admin Dashboard Panel</title> 
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+            </div>
+            <span class="logo_name">ADMIN</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="{{ url_for('main.admin_home') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Overview</span>
+                </a></li>
+                <li><a href="{{ url_for('main.adstudents') }}">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Students</span>
+                </a></li>
+                <li><a href="{{ url_for('main.adclubs') }}">
+                    <i class="uil uil-heart"></i>
+                    <span class="link-name">Clubs</span>
+                </a></li>
+                <li><a href="{{ url_for('main.adclubleaders') }}">
+
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Club leaders</span>
+                </a></li>
+               
+            </ul>
+            
+            <ul class="logout-mode">
+                <li><a href="{{ url_for('main.logout') }}">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+
+                
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <p class="logo">Campus <b style="color: #6A0DAD;">Connect</b></p>
+        </div>
+        <br><br><br>
+
+        <!-- Overview Panel -->
+        <div class="boxes">
+            <div class="box box1">
+                <i class="uil uil-user"></i>
+                <span class="text">Total Students</span>
+                <span class="number">{{ total_students }}</span>
+            </div>
+            <div class="box box2">
+                <i class="uil uil-comments"></i>
+                <span class="text">Feedbacks</span>
+                <span class="number">{{ total_clubs }}</span>
+            </div>
+            <div class="box box3">
+                <i class="uil uil-calendar-alt"></i>
+                <span class="text">Total Club leaders</span>
+                <span class="number">{{ total_club_leaders }}</span>
+            </div>
+        </div>
+
+        <style>.dashboard .boxes {
+            display: flex;
+            align-items: stretch;
+            justify-content: flex-start;
+            gap: 20px;
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        
+        .dashboard .boxes .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            width: 30%;
+            padding: 20px;
+            background-color: var(--box1-color);
+            transition: var(--tran-05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard .boxes .box:hover{
+            transform: scale(.9);
+          
+          }
+        .boxes .box i{
+            font-size: 35px;
+            color: var(--text-color);
+        }
+        .boxes .box .text{
+            white-space: nowrap;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        .boxes .box .number{
+            font-size: 40px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        .boxes .box.box2{
+            background-color: var(--box2-color);
+        }
+        .boxes .box.box3{
+            background-color: var(--box3-color);
+        }</style>
+        <!-- Recent Activities -->
+        <div class="recent-activities">
+            <h2>Recent Activities</h2>
+            <table border="1" cellspacing="0" cellpadding="10">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Username</th>
+                        <th>Club Name</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for activity in recent_activities %}
+                    <tr>
+                        <td>{{ activity.full_name }}</td>
+                        <td>{{ activity.email }}</td>  <!-- Changed to email -->
+
+                        <td>{{ activity.club_name }}</td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+
+
+        
+    </section>
+</body>
+</html>

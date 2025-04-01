@@ -1,0 +1,159 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f0fa; /* Light lavender */
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0; /* Removed padding to prevent extra spacing */
+  min-height: 100vh;
+}
+
+/* Header Styling */
+.header {
+  width: 100%; /* Ensure it spans the full width */
+  background-color: #6a329f; /* Medium purple */
+  color: white;
+  text-align: center;
+  height: 90px; /* Adjusted for consistent height */
+  line-height: 1.2; /* Added for text alignment */
+  padding: 10px 0; /* Adjusted padding for spacing */
+  position: fixed; /* Fixed the header at the top */
+  top: 0; /* Aligns to the top of the page */
+  left: 0; /* Aligns to the left edge */
+  z-index: 1000; /* Ensures it stays above other elements */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Body Content Padding */
+body {
+  padding-top: 90px; /* Adds space below the fixed header to prevent overlap */
+}
+
+/* Header Text Styling */
+.header h1 {
+  font-size: 32px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.header p {
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+/* Profile Icon */
+.profile-icon {
+  position: absolute;
+  top: 25px; /* Adjusted for consistent spacing */
+  right: 20px;
+  cursor: pointer;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Clubs Container */
+.clubs-container {
+  text-align: center;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.clubs-container h2 {
+  font-size: 28px;
+  color: #4b306d; /* Deep purple */
+  margin-bottom: 20px;
+}
+
+/* General Club Grid Styling */
+.club-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Club Card Styling with Light Background Images */
+.club-card {
+  position: relative;
+  width: 300px;
+  height: 180px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white; /* Ensure text is visible */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Semi-transparent overlay for readability */
+.club-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Text content on the club card */
+.club-card h3,
+.club-card p {
+  position: relative;
+  z-index: 2; /* Ensure text is above the overlay */
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8); /* Extra shadow for readability */
+}
+
+/* Club Card Hover Effect */
+.club-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Specific Club Background Images */
+.club-card.arts {
+  background-image: url('images/tech.jpg'); /* Replace with your image path */
+}
+
+.club-card.technical {
+  background-image: url('images/profileicon.png'); /* Replace with your image path */
+}
+
+.club-card.sports {
+  background-image: url('images/sports_background.jpg'); /* Replace with your image path */
+}
+
+.club-card.literary {
+  background-image: url('images/literary_background.jpg'); /* Replace with your image path */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .club-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adashboard.css') }}">
+     
+    <!-- Iconscout CSS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Club Leaders</title>
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image"></div>
+            <span class="logo_name">ADMIN</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="{{ url_for('main.admin_home') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Overview</span>
+                </a></li>
+                <li><a href="{{ url_for('main.adstudents') }}">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Students</span>
+                </a></li>
+                <li><a href="{{ url_for('main.adclubs') }}">
+                    <i class="uil uil-heart"></i>
+                    <span class="link-name">Clubs</span>
+                </a></li>
+                <li><a href="{{ url_for('main.adclubleaders') }}">
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Club leaders</span>
+                </a></li>
+            </ul>
+            
+            <ul class="logout-mode">
+                <li><a href="{{ url_for('main.logout') }}">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <p class="logo">Campus <b style="color: #6A0DAD;">Connect</b></p>
+        </div>
+        <br><br><br>
+
+        <div class="Club-leader-details">
+            <h2>Club Leader Details</h2>
+            <table border="1" cellspacing="0" cellpadding="10">
+                <thead>
+                    <tr>
+                        <th>Assigned Club Name</th>
+
+                        <th>Club Leader</th>
+                        <th>Department</th>
+                        <th>Regd Number</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for leader in club_leaders %}
+                    <tr>
+                        <td>{{ leader.club.club_name if leader.club else 'N/A' }}</td>
+
+                        <td>{{ leader.full_name }}</td>
+                        <td>{{ leader.department }}</td>
+                        <td>{{ leader.leader_id }}</td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+</html>

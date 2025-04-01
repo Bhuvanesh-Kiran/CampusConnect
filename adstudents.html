@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adashboard.css') }}">
+     
+    <!-- Iconscout CSS -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Admin Dashboard Panel</title> 
+
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow-y: auto; /* Enables scrolling if needed */
+            padding-top: 50px;
+        }
+
+        .modal-content {
+            background: white;
+            width: 40%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px gray;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Ensures modal form is fully visible on small screens */
+        @media screen and (max-width: 768px) {
+            .modal-content {
+                width: 90%;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image"></div>
+            <span class="logo_name">ADMIN</span>
+        </div>
+
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="{{ url_for('main.admin_home') }}">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Overview</span>
+                </a></li>
+                <li><a href="{{ url_for('main.adstudents') }}">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Students</span>
+                </a></li>
+                <li><a href="{{ url_for('main.adclubs') }}">
+                    <i class="uil uil-heart"></i>
+                    <span class="link-name">Clubs</span>
+                </a></li>
+                <li><a href="{{ url_for('main.adclubleaders') }}">
+
+                    <i class="uil uil-comments"></i>
+                    <span class="link-name">Club leaders</span>
+                </a></li>
+               
+            </ul>
+
+            <ul class="logout-mode">
+                <li><a href="{{ url_for('main.logout') }}"><i class="uil uil-signout"></i><span class="link-name">Logout</span></a></li>
+
+                
+            </ul>
+        </div>
+    </nav>
+
+    <section class="dashboard">
+        <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+            <p class="logo">Campus <b style="color: #6A0DAD;">Connect</b></p>
+        </div>
+        <br><br><br>
+
+        <div class="batch-container">
+            <h2>Student Batch Details</h2>
+            <label for="batchYear">Enter Batch Year:</label>
+            <input type="number" id="batchYear" placeholder="Enter batch year">
+            <button onclick="displayBatchDetails()">Search</button>
+
+
+
+            <table border="1" cellspacing="0" cellpadding="10" id="batchTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Regd Number</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody id="batchTableBody"></tbody>
+            </table>
+        </div>
+
+        <button id="add-student-button" onclick="openModal()" style="border: 1px solid #007bff; background: none; color: #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; width: 5cm;">Add Student</button>
+
+        <!-- Modal for Adding Student -->
+        <div id="studentModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Add Student</h2>
+                <div class="form-group">
+                    <label>Registration Number</label>
+                    <input type="text" id="regdNo">
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="name">
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <input type="text" id="dept">
+                </div>
+                <div class="form-group">
+                    <label>Batch</label>
+                    <input type="number" id="academicYear">
+                </div>
+                <div class="form-group">
+                    <label>Gender</label>
+                    <input type="text" id="gender">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="text" id="phone">
+                </div>
+                <div class="form-group">
+                    <button onclick="saveStudent()">Save Student</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const studentsData = {
+            2022: [
+                { name: "Bhuvanesh", department: "CSIT", regd: "22331A0703", batch: 2022 },
+                { name: "Vikram", department: "ECE", regd: "22331A0728", batch: 2022 },
+                { name: "Megha", department: "IT", regd: "22331A0730", batch: 2022 }
+            ],
+            2023: [
+                { name: "Sneha", department: "IT", regd: "23331A0715", batch: 2023 },
+                { name: "Harsha", department: "MECH", regd: "23331A0740", batch: 2023 }
+            ],
+            2024: [
+                { name: "Aditi", department: "EEE", regd: "24331A0732", batch: 2024 }
+            ]
+        };
+
+        function displayBatchDetails() {
+            let inputYear = document.getElementById("batchYear").value;
+            let tableBody = document.getElementById("batchTableBody");
+            let table = document.getElementById("batchTable");
+            tableBody.innerHTML = ""; // Clear previous results
+
+            tableBody.innerHTML = ""; // Clear previous results
+
+
+            tableBody.innerHTML = "";
+            if (studentsData[inputYear]) {
+                studentsData[inputYear].forEach(student => {
+                    let row = `<tr><td>${student.name}</td><td>${student.department}</td><td>${student.regd}</td><td>${student.batch}</td></tr>`;
+                    tableBody.innerHTML += row;
+                });
+                table.style.display = "table";
+            } else {
+                table.style.display = "none";
+            }
+        }
+
+        function openModal() { document.getElementById("studentModal").style.display = "block"; }
+        function closeModal() { document.getElementById("studentModal").style.display = "none"; }
+        function saveStudent() {
+            alert("Student details saved!");
+            closeModal();
+        }
+
+    </script>
+
+</body>
+</html>

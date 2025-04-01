@@ -1,0 +1,153 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f0fa; /* Light lavender */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0; /* Removed padding to avoid extra spacing */
+}
+
+/* Top Bar */
+.top-bar {
+    width: 100%; /* Ensure it spans the full width */
+    background-color: #6a329f; /* Medium purple */
+    color: white;
+    text-align: center;
+    height: 75px;
+    line-height: 75px; /* Center text vertically */
+    font-size: 28px;
+    font-weight: bold;
+    position: fixed; /* Make the top bar fixed at the top */
+    top: 0; /* Position it at the top of the page */
+    left: 0; /* Align to the left edge */
+    z-index: 1000; /* Ensure it stays above other elements */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Body Content Padding */
+body {
+    padding-top: 75px; /* Add padding to prevent content overlap with the top bar */
+}
+/* Add this to your existing CSS */
+.login-box select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.login-box select:focus {
+    outline: none;
+    border-color: #6a329f; /* Medium purple */
+    box-shadow: 0 0 5px rgba(106, 50, 159, 0.3);
+}
+/* Login Container */
+.login-container {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    width: 30%;
+    max-width: 900px;
+    padding: 30px;
+    text-align: center;
+}
+
+/* Title Box */
+.title-box h1 {
+    font-size: 30px;
+    color: #4b306d; /* Deep purple */
+    font-weight: bold;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+}
+
+/* Login Options */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Login Box Styling */
+.login-box {
+    flex: 1 1 calc(33.333% - 20px);
+    background: #f0e3f8; /* Soft purple */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.login-box h2 {
+    font-size: 24px;
+    color: #4b306d; /* Deep purple */
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.login-box label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #4b306d; /* Deep purple text */
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.login-box input:focus {
+    outline: none;
+    border-color: #6a329f; /* Medium purple */
+    box-shadow: 0 0 5px rgba(106, 50, 159, 0.3);
+}
+
+.login-button {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #6a329f; /* Medium purple */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #4b306d; /* Deep purple */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-box {
+        flex: 1 1 100%;
+    }
+}

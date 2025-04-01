@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Connect - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        Welcome to Campus Connect - A platform for College Clubs
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="title-box">
+            <h1>CAMPUS CONNECT</h1>
+        </div>
+
+        <!-- Login Options -->
+        <div class="login-options">
+            <!-- Admin Login -->
+            <div class="login-box">
+                <h2>Login</h2>
+                <form action="{{ url_for('main.login') }}" method="post" autocomplete="off">
+                    <label for="user_type">User Type:</label>
+                    <select id="user_type" name="user_type" required>
+                        <option value="1">Administrator</option>
+                        <option value="2">Club Leader</option>
+                        <option value="3">Student</option>
+                    </select>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+                    <button type="submit" class="login-button">Login</button>
+
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            <p class="error-message" style="color: red;">{{ messages[0] }}</p>
+                        {% endif %}
+                    {% endwith %}
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
