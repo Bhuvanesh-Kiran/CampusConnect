@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Connect - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <style>
+        .hero {
+            background-image: url("{{ url_for('static', filename='images/i.jpg') }}");
+            background-size: cover;
+            background-position: center;
+        }
+        .notification-dot {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">
+            <a href="#">Campus Connect</a>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="{{ url_for('main.clubs') if session.get('user_id') else url_for('main.login') }}">Clubs</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li>
+                    <a href="{{ url_for('main.notifications') if session.get('user_id') else url_for('main.login') }}">
+                        <i class="fa fa-bell"></i>
+                        {% if session.get('user_id') and Notification.query.filter_by(student_id=session['user_id'], status='unread').count() > 0 %}
+                            <span class="notification-dot"></span>
+                        {% endif %}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="profile">
+            <img src="{{ url_for('static', filename='images/profileicon.png') }}" alt="Profile" class="profile-icon" onclick="window.location.href='{{ url_for('main.profile') if session.get('user_id') else url_for('main.login') }}'">
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to Campus Connect</h1>
+        <p>Your one-stop platform to explore and join college clubs!</p>
+        <a href="{{ url_for('main.clubs') if session.get('user_id') else url_for('main.login') }}" class="cta-button">Explore Clubs</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+        <h2>About Us</h2>
+        <p>Campus Connect is designed to help students discover and connect with various clubs at their college. Whether you're into arts, technology, sports, or culture, we've got a club for you!</p>
+    </section>
+
+    <!-- Clubs Section -->
+    <section id="clubs" class="section clubs">
+        <h2>Featured Clubs</h2>
+        <div class="club-container">
+            {% for club in clubs %}
+                <div class="club-card">
+                    <h3>{{ club.club_name }}</h3>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="section events">
+        <h2>Upcoming Events</h2>
+        {% for event in events %}
+            <div class="event-card">
+                <h3>{{ event.headline }}</h3>
+                <p>Date: {{ event.event_date }}</p>
+                <p>{{ event.event_details }}</p>
+            </div>
+        {% endfor %}
+    </section>
+
+    <!-- Contact Section -->
+    <footer id="contact" class="footer">
+        <h2>Contact Us</h2>
+        <p>Email: batchno.3@campusconnect.com | Phone: +123-456-7890</p>
+        <div class="footer-icons">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-instagram"></i></a>
+        </div>
+        <p>&copy; 2025 Campus Connect. All rights reserved.</p>
+    </footer>
+</body>
+</html>

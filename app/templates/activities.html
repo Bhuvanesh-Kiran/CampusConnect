@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <p class="logo">Campus <b style="color: #6A0DAD;">Connect</b></p>
+    </div>
+    <br><br><br>
+
+    <div class="activities-section">
+        <h2>Activities</h2>
+        <div class="activities-list">
+            {% for activity in activities %}
+            <div class="activity-item">
+                <h3>{{ activity.activity_name }}</h3>
+                <p class="date">{{ activity.activity_date }} at {{ activity.activity_time }}</p>
+                <p class="venue">{{ activity.venue }}</p>
+                <p class="description">{{ activity.description }}</p>
+                
+                {% if session.user_type == 'student' %}
+                    {% if not Interested.query.filter_by(activity_id=activity.activity_id, student_id=session.user_id).first() %}
+                        <form action="{{ url_for('main.activities', club_id=club.club_id) }}" method="POST">
+                            <input type="hidden" name="activity_id" value="{{ activity.activity_id }}">
+                            <button type="submit" name="interested" class="interested-button">I'm Interested</button>
+                        </form>
+                    {% else %}
+                        <p class="success-msg">Request sent successfully</p>
+                    {% endif %}
+                {% elif session.user_type == 'club_leader' and is_club_leader %}
+                    <form action="{{ url_for('main.activities', club_id=club.club_id) }}" method="POST">
+                        <input type="hidden" name="activity_id" value="{{ activity.activity_id }}">
+                        <button type="submit" name="delete_activity" class="delete-button">Delete</button>
+                    </form>
+                    <button onclick="toggleInterested(this)" class="show-interested-button">Show Interested</button>
+                    <div class="interested-section" style="display: none;">
+                        <p><strong>Total Interested:</strong> {{ Interested.query.filter_by(activity_id=activity.activity_id).count() }}</p>
+                        <table class="students-table">
+                            <tr>
+                                <th>Name</th>
+                                <th>Regd. No.</th>
+                                <th>Department</th>
+                                <th>Email</th>
+                            </tr>
+                            {% for interest in Interested.query.filter_by(activity_id=activity.activity_id) %}
+                            <tr>
+                                <td>{{ interest.student.full_name }}</td>
+                                <td>{{ interest.student.student_id }}</td>
+                                <td>{{ interest.student.department }}</td>
+                                <td>{{ interest.student.email }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if is_club_leader %}
+        <button id="add-activity-button" style="border: 1px solid #007bff; background: none; color: #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; width: 5cm;">Add Activity</button>
+
+        <div id="add-activity-form" style="display: none; margin-top: 20px;">
+            <form action="{{ url_for('main.activities', club_id=club.club_id) }}" method="POST">
+                <input name="activity_name" type="text" placeholder="Activity Name" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                <input name="activity_date" type="date" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                <input name="activity_time" type="time" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                <textarea name="description" placeholder="Description" style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required></textarea>
+                <input name="venue" type="text" placeholder="Venue" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                <button type="submit" name="add_activity" style="border: 1px solid #007bff; background: none; color: #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; width: 5cm;">Submit</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<script>
+    // Toggle Add Activity Form
+    const addActivityButton = document.getElementById('add-activity-button');
+    const addActivityForm = document.getElementById('add-activity-form');
+    if (addActivityButton) {
+        addActivityButton.addEventListener('click', () => {
+            addActivityForm.style.display = 'block';
+        });
+    }
+
+    // Toggle Interested Section
+    function toggleInterested(button) {
+        const interestedSection = button.parentElement.querySelector('.interested-section');
+        interestedSection.style.display = interestedSection.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubs - Campus Connect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clubs.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h1>Campus Connect</h1>
+        <p>Discover and Join Your Favorite Clubs!</p>
+        <!-- Profile Icon -->
+        <div class="profile-icon" onclick="window.location.href='{{ url_for('main.profile') }}'">
+
+            <img src="{{ url_for('static', filename='images/profileicon.png') }}" alt="Profile" class="profile-img">
+        </div>
+        <!-- Notification Icon -->
+        <div class="notification-icon" onclick="window.location.href='{{ url_for('main.notifications') }}'" style="position: absolute; top: 25px; right: 70px; cursor: pointer;">
+            <img src="{{ url_for('static', filename='images/notification-icon.png') }}" alt="Notifications" class="notification-img" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);">
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="clubs-container">
+        <h2>Explore Our Clubs</h2>
+        <div class="club-grid">
+            {% for club in clubs %}
+            <div class="club-card" onclick="window.location.href='{{ url_for('main.club_dashboard', club_id=club.club_id) }}'">
+                <div class="club-icon"></div>
+                <h3>{{ club.club_name }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

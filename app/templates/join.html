@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <p class="logo">Campus <b style="color: #6A0DAD;">Connect</b></p>
+    </div>
+    <br><br><br>
+
+    <div class="form-container">
+        <h2>Join {{ club.club_name }}</h2>
+        {% if join_request %}
+            <p>Your join request status: <strong>{{ join_request.status }}</strong></p>
+        {% else %}
+            <form action="{{ url_for('main.join', club_id=club.club_id) }}" method="POST" class="join-form">
+                <p>Click the button below to send a join request to {{ club.club_name }}.</p>
+                <button type="submit">Join Club</button>
+            </form>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

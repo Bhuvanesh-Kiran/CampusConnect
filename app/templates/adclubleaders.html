@@ -1,0 +1,29 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<div class="Club-leader details">
+    <h2>Club Leader Details</h2>
+    <table border="1" cellspacing="0" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Club Name</th>
+                <th>Club Leader</th>
+                <th>Department</th>
+                <th>Regd Number</th>
+                <th>Club Leader Contact</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for leader in club_leaders %}
+            <tr>
+                <td>{{ leader.club.club_name }}</td>
+                <td>{{ leader.full_name }}</td>
+                <td>{{ leader.department }}</td>
+                <td>{{ leader.regd_number }}</td>
+                <td>{{ leader.phone_number }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

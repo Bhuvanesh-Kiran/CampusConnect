@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <p class="logo">Campus <b style="color: #6A0DAD;">Connect</b></p>
+    </div>
+    <br><br><br>
+
+    <!-- Photos Section -->
+    <div class="photos">
+        <h2>Event Photos</h2>
+        <div class="photo-gallery" id="photo-gallery">
+            {% for media in gallery %}
+                {% if media.photo_url %}
+                <img src="{{ media.photo_url }}" alt="{{ media.photo_name }}">
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if is_club_leader %}
+        <button id="add-photo-button" style="border: 1px solid #007bff; background: none; color: #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; width: 5cm;">Add Photos</button>
+
+        <div id="add-photo-form" style="display: none; margin-top: 20px;">
+            <form action="{{ url_for('main.gallery', club_id=club.club_id) }}" method="POST">
+                <input name="photo_name" type="text" placeholder="Photo Name" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                <input name="photo_url" type="text" placeholder="Photo URL" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                <button type="submit" name="add_photo" style="border: 1px solid #007bff; background: none; color: #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; width: 5cm;">Submit</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+
+    <br><br>
+
+    <!-- Videos Section -->
+    <div class="videos">
+        <h2>Event Videos</h2>
+        <div class="video-gallery" id="video-gallery">
+            {% for media in gallery %}
+                {% if media.video_url %}
+                <iframe width="560" height="315" src="{{ media.video_url }}" title="{{ media.video_name }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if is_club_leader %}
+        <button id="add-video-button" style="border: 1px solid #007bff; background: none; color: #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; width: 5cm;">Add Videos</button>
+
+        <div id="add-video-form" style="display: none; margin-top: 20px;">
+            <form action="{{ url_for('main.gallery', club_id=club.club_id) }}" method="POST">
+                <input name="video_name" type="text" placeholder="Video Name" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                <input name="video_url" type="text" placeholder="Video URL" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                <button type="submit" name="add_video" style="border: 1px solid #007bff; background: none; color: #007bff; padding: 5px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; width: 5cm;">Submit</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<script>
+    // Toggle Add Photo Form
+    const addPhotoButton = document.getElementById('add-photo-button');
+    const addPhotoForm = document.getElementById('add-photo-form');
+    if (addPhotoButton) {
+        addPhotoButton.addEventListener('click', () => {
+            addPhotoForm.style.display = 'block';
+        });
+    }
+
+    // Toggle Add Video Form
+    const addVideoButton = document.getElementById('add-video-button');
+    const addVideoForm = document.getElementById('add-video-form');
+    if (addVideoButton) {
+        addVideoButton.addEventListener('click', () => {
+            addVideoForm.style.display = 'block';
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  
+  <!-- Font Awesome and Unicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/adashboard.css') }}">
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <nav>
+    <div class="logo-name">
+      <span class="logo_name">ADMIN</span>
+    </div>
+
+    <div class="menu-items">
+      <ul class="nav-links">
+        <li><a href="{{ url_for('main.admin_home') }}">
+          <i class="uil uil-estate"></i>
+          <span class="link-name">Overview</span>
+        </a></li>
+        <li><a href="{{ url_for('main.adstudents') }}">
+          <i class="uil uil-users-alt"></i>
+          <span class="link-name">Students</span>
+        </a></li>
+        <li><a href="{{ url_for('main.adclubs') }}">
+          <i class="uil uil-club"></i>
+          <span class="link-name">Clubs</span>
+        </a></li>
+        <li><a href="{{ url_for('main.adclubleaders') }}">
+          <i class="uil uil-user-md"></i>
+          <span class="link-name">Club Leaders</span>
+        </a></li>
+      </ul>
+
+      <ul class="logout-mode">
+        <li><a href="{{ url_for('main.logout') }}">
+          <i class="uil uil-signout"></i>
+          <span class="link-name">Logout</span>
+        </a></li>
+        <li class="mode">
+          <a href="#">
+            <i class="uil uil-moon"></i>
+            <span class="link-name">Dark Mode</span>
+          </a>
+          <div class="mode-toggle">
+            <span class="switch"></span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Dashboard Content -->
+  <section class="dashboard">
+    <div class="top">
+      <i class="uil uil-bars sidebar-toggle"></i>
+      <p class="logo">Campus <b style="color: #6a329f;">Connect</b></p>
+    </div>
+
+    {% block content %}{% endblock %}
+  </section>
+
+  <!-- Custom JavaScript -->
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

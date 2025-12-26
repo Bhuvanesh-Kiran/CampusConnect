@@ -1,0 +1,36 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<div class="dash-content">
+    <!-- Overview Section -->
+    <div class="overview">
+        <div class="title">
+            <i class="uil uil-tachometer-fast-alt"></i>
+            <span class="text">Dashboard Overview</span>
+        </div>
+
+        <div class="boxes">
+            <!-- Total Students Card -->
+            <div class="box box1">
+            <i class="uil uil-users-alt"></i>
+            <span class="text">Total Students</span>
+            <span class="number">{{ total_students }}</span>
+            </div>
+
+            <!-- Total Clubs Card -->
+            <div class="box box2">
+            <i class="uil uil-club"></i>
+            <span class="text">Total Clubs</span>
+            <span class="number">{{ total_clubs }}</span>
+            </div>
+
+            <!-- Total Club Leaders Card -->
+            <div class="box box3">
+            <i class="uil uil-user-circle"></i>
+            <span class="text">Total Club Leaders</span>
+            <span class="number">{{ total_club_leaders }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

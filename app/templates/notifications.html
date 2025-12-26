@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Campus Connect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .notifications-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .notification-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .notification-item.unread {
+            background-color: #f9f9f9;
+            font-weight: bold;
+        }
+        .notification-item.read {
+            background-color: white;
+            color: #666;
+        }
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        .notification-message {
+            flex: 1;
+        }
+        .notification-time {
+            font-size: 12px;
+            color: #999;
+        }
+        .mark-read-btn {
+            background-color: #6A0DAD;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        .mark-read-btn:hover {
+            background-color: #5a0a9d;
+        }
+    </style>
+</head>
+<body>
+    <div class="notifications-container">
+        <h2>Notifications</h2>
+        {% for notification in notifications %}
+        <div class="notification-item {% if notification.status == 'unread' %}unread{% else %}read{% endif %}">
+            <div class="notification-message">
+                {{ notification.message }}
+            </div>
+            <div class="notification-time">
+                {{ notification.timestamp.strftime('%Y-%m-%d %H:%M') }}
+            </div>
+            {% if notification.status == 'unread' %}
+            <a href="{{ url_for('main.mark_notification_as_read', notification_id=notification.notification_id) }}" class="mark-read-btn">Mark as Read</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        // JavaScript to handle marking notifications as read
+        document.addEventListener('DOMContentLoaded', function() {
+            const markReadButtons = document.querySelectorAll('.mark-read-btn');
+
+            markReadButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const notificationItem = this.closest('.notification-item');
+                    const url = this.getAttribute('href');
+
+                    // Send a request to mark the notification as read
+                    fetch(url, { method: 'GET' })
+                        .then(response => {
+                            if (response.ok) {
+                                // Update the UI
+                                notificationItem.classList.remove('unread');
+                                notificationItem.classList.add('read');
+                                this.remove(); // Remove the "Mark as Read" button after clicking
+                            } else {
+                                alert('Failed to mark notification as read.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

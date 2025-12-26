@@ -1,0 +1,65 @@
+{% extends "admin_base.html" %}
+
+{% block content %}
+<div class="batch-container">
+    <h2>Student Batch Details</h2>
+    <form method="GET" action="{{ url_for('main.adstudents') }}">
+        <label for="batchYear">Enter Batch Year:</label>
+        <input type="number" id="batchYear" name="batchYear" placeholder="Enter batch year" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if request.args.get('batchYear') and not students %}
+    <p>No students found for the selected batch.</p>
+    {% endif %}
+
+    {% if students %}
+    <table border="1" cellspacing="0" cellpadding="10" id="batchTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Regd Number</th>
+                <th>Batch Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.full_name }}</td>
+                <td>{{ student.department }}</td>
+                <td>{{ student.regd_number }}</td>
+                <td>{{ student.batch }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    <button id="addStudentButton" onclick="toggleAddStudentForm()">Add Students</button>
+
+    <div id="addStudentForm" style="display: none;">
+        <h2>Add Students</h2>
+        <form method="POST" action="{{ url_for('main.add_students') }}" enctype="multipart/form-data">
+            <label for="batch"> Batch:</label>
+            <input type="number" id="batch" name="batch" placeholder="Enter batch year" required>
+            <br><br>
+            <label for="csvFile">Upload CSV File:</label>
+            <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
+            <br><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function toggleAddStudentForm() {
+        const form = document.getElementById('addStudentForm');
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}

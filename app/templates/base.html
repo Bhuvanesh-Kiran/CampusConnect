@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clubs Dashboard</title>
+  
+  <!-- Font Awesome and Unicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <nav>
+    <div class="logo-name">
+      <span class="logo_name">WELCOME {{ session.user_type | capitalize }}</span>
+    </div>
+
+    <div class="menu-items">
+      <ul class="nav-links">
+        <li><a href="{{ url_for('main.club_dashboard', club_id=club.club_id) }}">
+          <i class="uil uil-estate"></i>
+          <span class="link-name">Dashboard</span>
+        </a></li>
+        <li><a href="{{ url_for('main.description', club_id=club.club_id) }}">
+          <i class="uil uil-estate"></i>
+          <span class="link-name">Description</span>
+        </a></li>
+        <li><a href="{{ url_for('main.news_events', club_id=club.club_id) }}">
+          <i class="uil uil-chart"></i>
+          <span class="link-name">News & Events</span>
+        </a></li>
+        <li><a href="{{ url_for('main.gallery', club_id=club.club_id) }}">
+          <i class="uil uil-images"></i>
+          <span class="link-name">Gallery</span>
+        </a></li>
+        
+        <!-- Student-specific links -->
+        {% if session.user_type == 'student' %}
+          {% set is_member = ClubMember.query.filter_by(club_id=club.club_id, student_id=session.user_id).first() %}
+          {% if is_member %}
+            <li><a href="{{ url_for('main.activities', club_id=club.club_id) }}">
+              <i class="uil uil-calendar-alt"></i>
+              <span class="link-name">Activities</span>
+            </a></li>
+          {% else %}
+            <li><a href="{{ url_for('main.join', club_id=club.club_id) }}">
+              <i class="uil uil-user-plus"></i>
+              <span class="link-name">Join Us</span>
+            </a></li>
+          {% endif %}
+        {% endif %}
+
+        <!-- Club Leader-specific links (only if they are the leader of the current club) -->
+        {% if session.user_type == 'club_leader' and is_club_leader %}
+          <li><a href="{{ url_for('main.feedback', club_id=club.club_id) }}">
+            <i class="uil uil-comments"></i>
+            <span class="link-name">Feedback</span>
+          </a></li>
+          <li><a href="{{ url_for('main.join_requests', club_id=club.club_id) }}">
+            <i class="uil uil-users-alt"></i>
+            <span class="link-name">Join Requests</span>
+          </a></li>
+          <li><a href="{{ url_for('main.activities', club_id=club.club_id) }}">
+            <i class="uil uil-calendar-alt"></i>
+            <span class="link-name">Activities</span>
+          </a></li>
+          <li><a href="{{ url_for('main.club_members', club_id=club.club_id) }}">
+            <i class="uil uil-users-alt"></i>
+            <span class="link-name">Club Members</span>
+          </a></li>
+        {% endif %}
+      </ul>
+
+      <ul class="logout-mode">
+        <li><a href="{{ url_for('main.logout') }}">
+          <i class="uil uil-signout"></i>
+          <span class="link-name">Logout</span>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Dynamic Content -->
+  {% block content %}{% endblock %}
+
+  <!-- Custom JavaScript -->
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

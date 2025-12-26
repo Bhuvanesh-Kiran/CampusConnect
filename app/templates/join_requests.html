@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="dashboard">
+    <div class="top">
+        <i class="uil uil-bars sidebar-toggle"></i>
+        <p class="logo">Campus <b style="color: #6A0DAD;">Connect</b> Join Requests</p>
+    </div>
+    <br><br><br>
+
+    <div class="activity">
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for request in join_requests %}
+                        <tr>
+                            <td>{{ request.student.full_name }}</td>
+                            <td>{{ request.student.email }}</td>
+                            <td>{{ request.student.department }}</td>
+                            <td>
+                                <a href="{{ url_for('main.handle_join_request', request_id=request.request_id, action='approve') }}" class="approve-btn">Approve</a>
+                                <a href="{{ url_for('main.handle_join_request', request_id=request.request_id, action='reject') }}" class="reject-btn">Reject</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .approve-btn, .reject-btn {
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        font-size: 14px;
+        border-radius: 5px;
+        margin-right: 5px;
+        text-decoration: none;
+        color: white;
+    }
+
+    .approve-btn {
+        background-color: #4CAF50;
+    }
+
+    .approve-btn:hover {
+        background-color: #45a049;
+    }
+
+    .reject-btn {
+        background-color: #f44336;
+    }
+
+    .reject-btn:hover {
+        background-color: #d32f2f;
+    }
+</style>
+{% endblock %}
